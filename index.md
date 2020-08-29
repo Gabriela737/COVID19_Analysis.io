@@ -12,6 +12,9 @@ En Colombia para agosto de 2020 se tiene un acumulado de más de 477.000 contagi
 ## Fuente de datos:
 [https://www.datos.gov.co/Salud-y-Protecci-n-Social/Casos-positivos-de-COVID-19-en-Colombia/gt2j-8ykr/data](url)
 
+## Metodología:
+[CRISP-DM](https://www.researchgate.net/profile/Ahmad_Nadali/publication/261109414/figure/fig1/AS:668916527423490@1536493536268/Phases-of-the-CRISP-DM-Process-Model-22.png)
+
 ### Extracción y limpieza de datos
 
 ```markdown
