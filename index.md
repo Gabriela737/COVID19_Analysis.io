@@ -15,7 +15,43 @@ En Colombia para agosto de 2020 se tiene un acumulado de más de 477.000 contagi
 ## Metodología:
 [CRISP-DM](https://www.researchgate.net/profile/Ahmad_Nadali/publication/261109414/figure/fig1/AS:668916527423490@1536493536268/Phases-of-the-CRISP-DM-Process-Model-22.png)
 
-### Extracción y limpieza de datos
+### Importamos los paquetes y librerias necesarias
+
+```python
+import  requests
+import  pandas as pd
+from    datetime import date
+import  time
+import  matplotlib.pyplot as plt
+import  numpy as np
+from    statsmodels.tsa.stattools import adfuller
+from    statsmodels.tsa.arima_model import ARIMA
+from    sklearn.metrics import mean_squared_error
+```
+
+### Extracción de datos por medio de API
+
+```python
+def extract_data(api_url, limit):
+    # Funcion para la extraccion de los datos via SODA API ODATA
+    data_len = 50000
+    offset = 0
+    appended_data = []
+    while data_len >= limit:
+        time.sleep(1)
+        params = {'$limit': limit, '$offset': offset}
+        response = requests.get(api_url, params=params)
+        data = response.json()
+        data_len = len(data)
+        if 'error' not in data or len(data) > 0:
+            df = pd.DataFrame.from_dict(data, orient='columns')
+            df['extracted_at_utc'] = pd.to_datetime('now',utc=True)
+            appended_data.append(df)
+            offset = offset + limit
+    return pd.concat(appended_data, ignore_index=True, sort=False)
+```
+
+### Limpieza de datos
 
 ```markdown
 Syntax highlighted code block
